@@ -28,9 +28,15 @@ class _HamoOrigState extends State<HamoOrig> {
                     child: CircleAvatar(
                       radius: 18,
                       backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: 16,
-                        foregroundImage: AssetImage('images/rasm6.jpg'),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () {
+                          
+                        },
+                        child: CircleAvatar(
+                          radius: 16,
+                          foregroundImage: AssetImage('images/rasm6.jpg'),
+                        ),
                       ),
                     ),
                   ),
@@ -194,42 +200,108 @@ class _HamoOrigState extends State<HamoOrig> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 40,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () {},
-                      child: Container(
-                        width: 90,
-                        height: 34,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.yellow.shade200,
-                        ),
-
-                        margin: EdgeInsets.symmetric(horizontal: 13),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              ls[index],
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.amber),
-                            ),
-                          ],
-                        ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: () {},
+                    child: Container(
+                      width: 90,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.yellow.shade200,
                       ),
-                    );
-                  },
-                ),
+              
+                    
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            ls[0],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.amber),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                    InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: () {},
+                    child: Container(
+                      width: 90,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                 
+                      ),
+              
+                    
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            ls[1],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                    InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: () {},
+                    child: Container(
+                      width: 90,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                       
+                      ),
+              
+                    
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            ls[2],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                    InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: () {},
+                    child: Container(
+                      width: 90,
+                      height: 34,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        
+                      ),
+              
+                    
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            ls[3],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 10),
@@ -398,6 +470,7 @@ class _HamoOrigState extends State<HamoOrig> {
                 ],
               ),
             ),
+            SizedBox(height: 39,),
           ],
         ),
       ),
