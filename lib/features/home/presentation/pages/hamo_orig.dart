@@ -10,6 +10,7 @@ class HamoOrig extends StatefulWidget {
 
 class _HamoOrigState extends State<HamoOrig> {
   List<String> ls = ['Today', 'Week', 'Month', 'Year'];
+  int son = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +31,7 @@ class _HamoOrigState extends State<HamoOrig> {
                       backgroundColor: Colors.white,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(100),
-                        onTap: () {
-                          
-                        },
+                        onTap: () {},
                         child: CircleAvatar(
                           radius: 16,
                           foregroundImage: AssetImage('images/rasm6.jpg'),
@@ -205,97 +204,107 @@ class _HamoOrigState extends State<HamoOrig> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () {},
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        son = 0;
+                      });
+                    },
                     child: Container(
                       width: 90,
                       height: 34,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Colors.yellow.shade200,
+                        color: son == 0 ? Colors.yellow.shade200 : Colors.white,
                       ),
-              
-                    
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            ls[0],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.amber),
+
+                      child: Center(
+                        child: Text(
+                          ls[0],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: son == 0 ? Colors.amber : Colors.grey,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                    InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () {},
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        son = 1;
+                      });
+                    },
                     child: Container(
                       width: 90,
                       height: 34,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                 
+                        color: son == 1 ? Colors.yellow.shade200 : Colors.white,
                       ),
-              
-                    
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            ls[1],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
+
+                      child: Center(
+                        child: Text(
+                          ls[1],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: son == 1 ? Colors.amber : Colors.grey,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                    InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () {},
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        son = 2;
+                      });
+                    },
                     child: Container(
                       width: 90,
                       height: 34,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                       
+                        color: son == 2 ? Colors.yellow.shade200 : Colors.white,
                       ),
-              
-                    
+
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             ls[2],
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(
+                              color: son == 2 ? Colors.amber : Colors.grey,
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                    InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () {},
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        son = 3;
+                      });
+                    },
                     child: Container(
                       width: 90,
                       height: 34,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        
+                        color: son == 3 ? Colors.yellow.shade200 : Colors.white,
                       ),
-              
-                    
+
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             ls[3],
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(
+                              color: son == 3 ? Colors.amber : Colors.grey,
+                            ),
                           ),
                         ],
                       ),
@@ -304,6 +313,7 @@ class _HamoOrigState extends State<HamoOrig> {
                 ],
               ),
             ),
+
             SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -470,7 +480,7 @@ class _HamoOrigState extends State<HamoOrig> {
                 ],
               ),
             ),
-            SizedBox(height: 39,),
+            SizedBox(height: 39),
           ],
         ),
       ),
