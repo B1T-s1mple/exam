@@ -1,6 +1,6 @@
 import 'package:exam/core/constants/app_colors.dart';
-import 'package:exam/features/home/presentation/pages/Login.dart';
-import 'package:exam/features/home/presentation/pages/signUp.dart';
+import 'package:exam/features/auth/presentation/page/Login.dart';
+import 'package:exam/features/auth/presentation/page/signUp.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 

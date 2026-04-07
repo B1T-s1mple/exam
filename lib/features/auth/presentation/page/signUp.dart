@@ -1,9 +1,11 @@
 import 'package:exam/core/constants/app_colors.dart';
-import 'package:exam/features/home/presentation/pages/Login.dart';
-import 'package:exam/features/home/presentation/pages/verefication.dart';
+import 'package:exam/features/auth/models/exam_model.dart';
+import 'package:exam/features/auth/presentation/page/Login.dart';
+import 'package:exam/features/auth/presentation/provider/exam_provider.dart';
+import 'package:exam/features/auth/presentation/page/verefication.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
-import 'package:exam/features/home/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -13,9 +15,20 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final namecontroller = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordcontroller = TextEditingController();
+
   bool vision = false;
   bool on = false;
   @override
+  void dispose() {
+    namecontroller.dispose();
+    emailController.dispose();
+    passwordcontroller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -25,13 +38,66 @@ class _SignupState extends State<Signup> {
       body: Column(
         children: [
           SizedBox(height: 56),
-          text_field(input: {'text': "Name"}),
-          SizedBox(height: 24),
-          text_field(input: {'text': "Email"}),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              controller: namecontroller,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                hintText: 'Name',
+                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+              ),
+            ),
+          ),
           SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextFormField(
+              controller: emailController,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                hintText: 'Email',
+                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              controller: passwordcontroller,
               obscureText: vision,
               cursorColor: Colors.black,
               decoration: InputDecoration(
@@ -122,19 +188,49 @@ class _SignupState extends State<Signup> {
             ),
           ),
           SizedBox(height: 27),
-          MainButton(
-            button: {
-              'text': ' Sign up',
-              "text_color": Colors.white,
-              'onPress': () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Verefication()),
-                );
-              },
-              'color': AppColors.primary_color,
+
+
+
+          
+          Consumer<ExamProvider>(
+            builder: (context, provider, _) {
+              return MainButton(
+                button: {
+                  'text': ' Sign up',
+                  "text_color": Colors.white,
+                  'onPress': () async {
+                    final request = RegisterRequest(
+                      name: namecontroller.text.trim(),
+                      password: passwordcontroller.text.trim(),
+                      email: emailController.text.trim(),
+                    );
+                   
+                    await context.read<ExamProvider>().register(request);
+                    if (provider.registerError != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(provider.registerError!)),
+                      );
+                    } else if (provider.registerResult == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Account created")),
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (context) => ExamProvider(),
+                            child: Verefication(),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  'color': AppColors.primary_color,
+                },
+              );
             },
           ),
+
           SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +251,6 @@ class _SignupState extends State<Signup> {
               width: 453,
               height: 56,
               decoration: BoxDecoration(
-                
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Colors.grey),
               ),

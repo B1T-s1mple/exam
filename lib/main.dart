@@ -1,7 +1,12 @@
+import 'package:exam/features/auth/presentation/provider/exam_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'features/home/presentation/pages/first_screen.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(create: (context) => ExamProvider(), child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: FirstScreen(), 
+      home: FirstScreen(),
     );
   }
 }

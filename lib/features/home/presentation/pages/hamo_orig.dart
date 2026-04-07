@@ -11,6 +11,7 @@ class HamoOrig extends StatefulWidget {
 class _HamoOrigState extends State<HamoOrig> {
   List<String> ls = ['Today', 'Week', 'Month', 'Year'];
   int son = 0;
+  int son_bar = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -335,7 +336,6 @@ class _HamoOrigState extends State<HamoOrig> {
                         color: Colors.deepPurpleAccent.withValues(alpha: 0.3),
                       ),
 
-                      margin: EdgeInsets.symmetric(horizontal: 13),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -352,134 +352,67 @@ class _HamoOrigState extends State<HamoOrig> {
               ),
             ),
             SizedBox(height: 20),
-            Container(
-              width: 356,
-              height: 60,
-              child: Row(
-                children: [
-                  Column(children: [Image.asset('images/rasm10.png')]),
-                  SizedBox(width: 14),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                height: 300,
+                
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                  return    Container(
+                  width: 356,
+                  height: 60,margin: EdgeInsets.only(bottom: 20),
+                  child: Row(
                     children: [
-                      Text('Shopping', style: TextStyle(fontSize: 17)),
-                      Text(
-                        'Buy some grocery',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 97, 95, 95),
-                        ),
+                      Column(children: [Image.asset('images/rasm10.png')]),
+                      SizedBox(width: 14),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Shopping', style: TextStyle(fontSize: 17)),
+                          Text(
+                            'Buy some grocery',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 97, 95, 95),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '-\$120',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.red,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            '10:00 AM',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 97, 95, 95),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '-\$120',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.red,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        '10:00 AM',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 97, 95, 95),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  
+                );
+                },),
               ),
             ),
+         
             SizedBox(height: 25),
-            Container(
-              width: 356,
-              height: 60,
-              child: Row(
-                children: [
-                  Column(children: [Image.asset('images/rasm11.png')]),
-                  SizedBox(width: 14),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Subscription', style: TextStyle(fontSize: 17)),
-                      Text(
-                        'Disney+ Annual..',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 97, 95, 95),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '-\$80',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.red,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        '03:30 PM',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 97, 95, 95),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              width: 356,
-              height: 60,
-              child: Row(
-                children: [
-                  Column(children: [Image.asset('images/rasm12.png')]),
-                  SizedBox(width: 14),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Food', style: TextStyle(fontSize: 17)),
-                      Text(
-                        'Buy a ramen',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 97, 95, 95),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '-\$32',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.red,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        '07:30 PM',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 97, 95, 95),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            
+          
             SizedBox(height: 39),
           ],
         ),
@@ -502,9 +435,14 @@ class _HamoOrigState extends State<HamoOrig> {
         selectedLabelStyle: TextStyle(color: AppColors.primary_color),
         unselectedLabelStyle: TextStyle(color: Colors.grey),
         iconSize: 32,
+        currentIndex: son_bar,
+        onTap: (value) {
+          print(son_bar);
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_sharp, color: AppColors.primary_color),
+
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -513,7 +451,7 @@ class _HamoOrigState extends State<HamoOrig> {
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(Icons.timelapse_outlined, color: Colors.grey.shade300),
+            icon: Icon(Icons.pie_chart, color: Colors.grey.shade300),
             label: 'Budget',
           ),
           BottomNavigationBarItem(

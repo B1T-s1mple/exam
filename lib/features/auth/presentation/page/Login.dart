@@ -1,9 +1,12 @@
 import 'package:exam/core/constants/app_colors.dart';
-import 'package:exam/features/home/presentation/pages/forgot_passsword.dart';
-import 'package:exam/features/home/presentation/pages/signUp.dart';
+import 'package:exam/features/auth/models/exam_model.dart';
+import 'package:exam/features/auth/presentation/page/forgot_passsword.dart';
+import 'package:exam/features/auth/presentation/page/signUp.dart';
+import 'package:exam/features/auth/presentation/provider/exam_provider.dart';
+import 'package:exam/features/home/presentation/pages/hamo_orig.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
-import 'package:exam/features/home/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,6 +17,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool vision = false;
+  final emailController = TextEditingController();
+  final passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +27,36 @@ class _LoginState extends State<Login> {
       body: Column(
         children: [
           SizedBox(height: 56),
-          text_field(input: {'text': 'Email'}),
+          TextFormField(
+            controller: emailController,
+            obscureText: vision,
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              hintText: 'Email',
+              hintStyle: TextStyle(color: Colors.grey),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+            ),
+          ),
           SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextFormField(
+              controller: passwordcontroller,
               obscureText: vision,
               cursorColor: Colors.black,
               decoration: InputDecoration(
@@ -65,14 +95,39 @@ class _LoginState extends State<Login> {
             ),
           ),
           SizedBox(height: 40),
-          MainButton(
-            button: {
-              'onPress': () {},
-              'text': 'Login',
-              'color': AppColors.primary_color,
-              'text_color': Colors.white,
+          Consumer<ExamProvider>(
+            builder: (context, provider, _) {
+              return MainButton(
+                button: {
+                  'onPress': () async {
+                    final request = LoginRequest(
+                      email: emailController.text.trim(),
+                      password: passwordcontroller.text.trim(),
+                    );
+                    await context.read<ExamProvider>().login(request);
+                    if (provider.loginError != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(provider.loginError!)),
+                      );
+                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider(
+                          create: (context) => ExamProvider(),
+                          child: HamoOrig(),
+                        ),
+                      ),
+                    );
+                  },
+                  'text': 'Login',
+                  'color': AppColors.primary_color,
+                  'text_color': Colors.white,
+                },
+              );
             },
           ),
+
           SizedBox(height: 33),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

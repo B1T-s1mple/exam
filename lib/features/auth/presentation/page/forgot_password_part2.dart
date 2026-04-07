@@ -1,5 +1,5 @@
 import 'package:exam/core/constants/app_colors.dart';
-import 'package:exam/features/home/presentation/pages/reset_password.dart';
+import 'package:exam/features/auth/presentation/page/reset_password.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 
