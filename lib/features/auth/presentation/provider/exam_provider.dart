@@ -65,4 +65,22 @@ class ExamProvider extends ChangeNotifier{
     }
   }
 
+final ExamRepo _repo = ExamRepo();
+  HomeResponse? homeData;
+  bool isLoading = false;
+
+  Future<void> getHomeData() async {
+    isLoading = true;
+    notifyListeners();
+    try {
+      homeData = await ExamRepo.malumotla();
+    } catch (e) {
+      print("Xato: $e");
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+
 }

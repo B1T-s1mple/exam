@@ -4,6 +4,7 @@ import 'package:exam/features/auth/models/exam_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ExamRepo {
+  static const String URL = "https://montra-mhys.onrender.com";
 
   Future<void> login(LoginRequest request) async {
     try {
@@ -12,7 +13,7 @@ class ExamRepo {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(request.toJson()),
       );
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 400) {
         final data = jsonDecode(response.body);
         throw data['detail'];
       }
@@ -24,17 +25,16 @@ class ExamRepo {
       throw 'ashibka: $e';
     }
   }
-  
-  static const String URL = "https://montra-mhys.onrender.com";
 
-  
-    Future<void> register(RegisterRequest request) async {
+  Future<void> register(RegisterRequest request) async {
     try {
       final response = await http.post(
-        Uri.parse("$URL/register"),
-        headers: {"Content-Type": "application/json","Accept": 'aplication/json'},
-        
-  
+        Uri.parse('$URL/register'),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+
         body: jsonEncode(request.toJson()),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -48,20 +48,36 @@ class ExamRepo {
       throw "ashibka: $e";
     }
   }
-    Future<void> sendOtp(OtpRequest request) async {
+
+  Future<void> sendOtp(OtpRequest request) async {
     try {
       final response = await http.post(
-        Uri.parse("$URL/confirm-otp"),
-        headers: {"Content-Type": "application/json"},
+        Uri.parse('$URL/confirm-otp'),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
         body: jsonEncode(request.toJson()),
       );
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 400) {
         throw jsonDecode(response.body).toString();
       }
       print(response.statusCode);
       print(response.body);
     } catch (e) {
       throw "Xatolik: $e";
+    }
+  }
+
+   static  Future<HomeResponse> malumotla() async {
+    final response = await http.get(
+      Uri.parse('https://montra-mhys.onrender.com/home'),
+    );
+
+    if (response.statusCode == 200) {
+      return HomeResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Xatolik: ${response.statusCode}");
     }
   }
 }

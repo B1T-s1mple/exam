@@ -37,7 +37,7 @@ class _VereficationState extends State<Verefication> {
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 53),
-            Row(children: [Pinput(length: 6)]),
+            Row(children: [Pinput(length: 4,controller: otpcontroller,)]),
             SizedBox(height: 47),
             Text(
               '04:59',

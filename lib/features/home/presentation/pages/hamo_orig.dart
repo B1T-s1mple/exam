@@ -1,5 +1,7 @@
 import 'package:exam/core/constants/app_colors.dart';
+import 'package:exam/features/auth/presentation/provider/exam_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HamoOrig extends StatefulWidget {
   const HamoOrig({super.key});
@@ -12,6 +14,11 @@ class _HamoOrigState extends State<HamoOrig> {
   List<String> ls = ['Today', 'Week', 'Month', 'Year'];
   int son = 0;
   int son_bar = 0;
+  void initState() {
+    super.initState();
+    Future.microtask(() => context.read<ExamProvider>().getHomeData());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -357,54 +364,88 @@ class _HamoOrigState extends State<HamoOrig> {
               child: SizedBox(
                 height: 300,
 
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 356,
-                      height: 60,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: Row(
-                        children: [
-                          Column(children: [Image.asset('images/rasm10.png')]),
-                          SizedBox(width: 14),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                child: Builder(
+                  builder: (context) {
+                    final provider = context.watch<ExamProvider>();
+                    final data = provider.homeData;
+
+                    if (provider.isLoading)
+                      return Center(child: CircularProgressIndicator());
+                    if (data == null) return Center(child: Text("info yo"));
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics:  NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: data.recentTransactions.length,
+                      itemBuilder: (context, index) {
+                        final transaction = data.recentTransactions[index];
+
+                        return Container(
+                          width: 356,
+                          height: 60,
+                          margin:  EdgeInsets.only(bottom: 20),
+                          child: Row(
                             children: [
-                              Text('Shopping', style: TextStyle(fontSize: 17)),
-                              Text(
-                                'Buy some grocery',
-                                style: TextStyle(
-                                  color: const Color.fromARGB(255, 97, 95, 95),
-                                ),
+                              Column(
+                                children: [
+                               
+                                  Image.asset('images/rasm10.png', width: 45),
+                                ],
+                              ),
+                               SizedBox(width: 14),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                               
+                                  Text(
+                                    transaction.category,
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                 
+                                  Text(
+                                    transaction.description,
+                                    style: TextStyle(
+                                      color: const Color.fromARGB(
+                                        255,
+                                        97,
+                                        95,
+                                        95,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                               Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                 
+                                  Text(
+                                    "${transaction.amount}\$",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                     
+                                      color: transaction.type == 'expense'
+                                          ? Colors.red
+                                          : Colors.green,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    transaction.time,
+                                    style:  TextStyle(
+                                      color: Color.fromARGB(255, 97, 95, 95),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '-\$120',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Text(
-                                '10:00 AM',
-                                style: TextStyle(
-                                  color: const Color.fromARGB(255, 97, 95, 95),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     );
                   },
                 ),

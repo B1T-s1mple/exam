@@ -212,7 +212,7 @@ class _SignupState extends State<Signup> {
                       );
                     } else if (provider.registerResult == true) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Account created")),
+                        SnackBar(content: Text("akk yaratildi")),
                       );
                       Navigator.push(
                         context,
