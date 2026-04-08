@@ -21,6 +21,11 @@ class _HamoOrigState extends State<HamoOrig> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<ExamProvider>();
+    final data = provider.homeData;
+
+    if (provider.isLoading) return Center(child: CircularProgressIndicator());
+    if (data == null) return Center(child: Text("info yo"));
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -92,7 +97,7 @@ class _HamoOrigState extends State<HamoOrig> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '\$9400',
+                  '\$${provider.homeData?.accountBalance ?? 0}',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
                 ),
               ],
@@ -128,7 +133,7 @@ class _HamoOrigState extends State<HamoOrig> {
                                 ),
 
                                 Text(
-                                  '\$5000',
+                                  '\$${provider.homeData?.income ?? 0}',
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w600,
@@ -168,7 +173,7 @@ class _HamoOrigState extends State<HamoOrig> {
                                 ),
 
                                 Text(
-                                  '\$1200',
+                                  '\$${provider.homeData?.expenses ?? 0}',
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w600,
@@ -360,92 +365,72 @@ class _HamoOrigState extends State<HamoOrig> {
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
                 height: 300,
 
-                child: Builder(
-                  builder: (context) {
-                    final provider = context.watch<ExamProvider>();
-                    final data = provider.homeData;
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: data.recentTransactions.length,
+                  itemBuilder: (context, index) {
+                    final transaction = data.recentTransactions[index];
 
-                    if (provider.isLoading)
-                      return Center(child: CircularProgressIndicator());
-                    if (data == null) return Center(child: Text("info yo"));
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      physics:  NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: data.recentTransactions.length,
-                      itemBuilder: (context, index) {
-                        final transaction = data.recentTransactions[index];
-
-                        return Container(
-                          width: 356,
-                          height: 60,
-                          margin:  EdgeInsets.only(bottom: 20),
-                          child: Row(
+                    return Container(
+                      width: 356,
+                      height: 60,
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: Row(
+                        children: [
+                          Column(
                             children: [
-                              Column(
-                                children: [
-                               
-                                  Image.asset('images/rasm10.png', width: 45),
-                                ],
+                              Image.asset('images/rasm10.png', width: 45),
+                            ],
+                          ),
+                          SizedBox(width: 14),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                transaction.category,
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                               SizedBox(width: 14),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                               
-                                  Text(
-                                    transaction.category,
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                 
-                                  Text(
-                                    transaction.description,
-                                    style: TextStyle(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        97,
-                                        95,
-                                        95,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                               Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                 
-                                  Text(
-                                    "${transaction.amount}\$",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                     
-                                      color: transaction.type == 'expense'
-                                          ? Colors.red
-                                          : Colors.green,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    transaction.time,
-                                    style:  TextStyle(
-                                      color: Color.fromARGB(255, 97, 95, 95),
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                transaction.description,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 97, 95, 95),
+                                ),
                               ),
                             ],
                           ),
-                        );
-                      },
+                          const Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "${transaction.amount}\$",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: transaction.type == 'expense'
+                                      ? Colors.red
+                                      : Colors.green,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                transaction.time,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 97, 95, 95),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),

@@ -39,16 +39,22 @@ class OtpRequest {
 
 class HomeResponse {
   final int accountBalance;
+  final int income;
+  final int expenses;
   final List<Transaction> recentTransactions;
 
   HomeResponse({
     required this.accountBalance,
+    required this.income,
+    required this.expenses,
     required this.recentTransactions,
   });
 
   factory HomeResponse.fromJson(Map<String, dynamic> json) {
     return HomeResponse(
       accountBalance: json['account_balance'] ?? 0,
+      income: json['income'] ?? 0,
+      expenses: json['expenses'] ?? 0,
       recentTransactions:
           (json['recent_transactions'] as List?)
               ?.map((i) => Transaction.fromJson(i))
