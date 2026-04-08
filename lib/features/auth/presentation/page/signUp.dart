@@ -189,9 +189,6 @@ class _SignupState extends State<Signup> {
           ),
           SizedBox(height: 27),
 
-
-
-
           Consumer<ExamProvider>(
             builder: (context, provider, _) {
               return MainButton(
@@ -204,26 +201,27 @@ class _SignupState extends State<Signup> {
                       password: passwordcontroller.text.trim(),
                       email: emailController.text.trim(),
                     );
-                   
+
                     await context.read<ExamProvider>().register(request);
                     if (provider.registerError != null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(provider.registerError!)),
                       );
                     } else if (provider.registerResult == true) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("akk yaratildi")),
-                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("akk yaratildi")));
+                    
+
+                    }
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChangeNotifierProvider(
-                            create: (context) => ExamProvider(),
-                            child: Verefication(email:emailController.text,),
+                          builder: (context) => Verefication(
+                            email: emailController.text.trim(),
                           ),
                         ),
                       );
-                    }
                   },
                   'color': AppColors.primary_color,
                 },

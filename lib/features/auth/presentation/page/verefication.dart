@@ -48,7 +48,7 @@ class _VereficationState extends State<Verefication> {
               ),
             ),
             Text(
-              'We send verification code to your\nemail brajaoma*****@gmail.com. You can \ncheck your inbox.',
+              'We send verification code to your\nemail ${widget.email} You can \ncheck your inbox.',
               style: TextStyle(fontSize: 17),
             ),
             SizedBox(height: 16),
