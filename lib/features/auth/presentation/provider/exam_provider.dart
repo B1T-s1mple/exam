@@ -65,7 +65,6 @@ class ExamProvider extends ChangeNotifier{
     }
   }
 
-final ExamRepo _repo = ExamRepo();
   HomeResponse? homeData;
   bool isLoading = false;
 
