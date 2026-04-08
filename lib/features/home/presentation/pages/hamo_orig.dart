@@ -12,6 +12,7 @@ class HamoOrig extends StatefulWidget {
 
 class _HamoOrigState extends State<HamoOrig> {
   List<String> ls = ['Today', 'Week', 'Month', 'Year'];
+  List<String> image = ['images/rasm10.png','images/rasm11.png','images/rasm12.png'];
   int son = 0;
   int son_bar = 0;
   void initState() {
@@ -207,7 +208,7 @@ class _HamoOrigState extends State<HamoOrig> {
               children: [
                 SizedBox(
                   width: 500,
-                  height: 200,
+                  height: 240,
                   child: Image.asset('images/rasm9.png', fit: BoxFit.contain),
                 ),
               ],
@@ -385,7 +386,7 @@ class _HamoOrigState extends State<HamoOrig> {
                         children: [
                           Column(
                             children: [
-                              Image.asset('images/rasm10.png', width: 45),
+                              Image.asset(image[index], width: 45),
                             ],
                           ),
                           SizedBox(width: 14),
@@ -437,7 +438,6 @@ class _HamoOrigState extends State<HamoOrig> {
               ),
             ),
 
-            SizedBox(height: 25),
 
             SizedBox(height: 39),
           ],

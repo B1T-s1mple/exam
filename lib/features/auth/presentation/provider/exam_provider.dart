@@ -2,9 +2,7 @@ import 'package:exam/features/auth/models/exam_model.dart';
 import 'package:exam/features/auth/repositories/exam_repo.dart';
 import 'package:flutter/material.dart';
 
-class ExamProvider extends ChangeNotifier{
-
-
+class ExamProvider extends ChangeNotifier {
   bool registering = false;
   String? registerError;
   bool? registerResult;
@@ -24,28 +22,29 @@ class ExamProvider extends ChangeNotifier{
       notifyListeners();
     }
   }
+
   bool loggingIn = false;
   String? loginError;
   bool? loginResult;
 
-  Future<void> login(LoginRequest request) async {
-    loggingIn = true;
-    loginError = null;
-    loginResult = null;
+ Future<void> login(LoginRequest request) async {
+  isLoading = true;
+  loginResult = false; 
+  notifyListeners();
+
+  try {
+    await ExamRepo.login(request);
+    loginResult = true; 
+  } catch (e) {
+    loginResult = false;
+    loginError = e.toString();
+  } finally {
+    isLoading = false;
     notifyListeners();
-    try {
-      await ExamRepo().login(request);
-      loginResult = true;
-    } catch (e) {
-      loginError = e.toString();
-    } finally {
-      loggingIn = false;
-      notifyListeners();
-    }
   }
+}
 
-
-    bool isSendingOtp = false;
+  bool isSendingOtp = false;
   String? otpError;
   bool? otpResult;
 
@@ -80,6 +79,4 @@ class ExamProvider extends ChangeNotifier{
       notifyListeners();
     }
   }
-
-
 }

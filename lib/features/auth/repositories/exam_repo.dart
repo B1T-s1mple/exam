@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ExamRepo {
   static const String URL = "https://montra-mhys.onrender.com";
 
-  Future<void> login(LoginRequest request) async {
+  static Future<void> login(LoginRequest request) async {
     try {
       final response = await http.post(
         Uri.parse("$URL/login"),

@@ -27,28 +27,31 @@ class _LoginState extends State<Login> {
       body: Column(
         children: [
           SizedBox(height: 56),
-          TextFormField(
-            controller: emailController,
-            obscureText: vision,
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              hintText: 'Email',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: Colors.grey.shade200),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: Colors.grey.shade200),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: Colors.grey.shade200),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: Colors.grey.shade200),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              controller: emailController,
+              obscureText: vision,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                hintText: 'Email',
+                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
               ),
             ),
           ),
@@ -100,25 +103,32 @@ class _LoginState extends State<Login> {
               return MainButton(
                 button: {
                   'onPress': () async {
-                    final request = LoginRequest(
-                      email: emailController.text.trim(),
-                      password: passwordcontroller.text.trim(),
-                    );
-                    await context.read<ExamProvider>().login(request);
-                    if (provider.loginError != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(provider.loginError!)),
-                      );
-                    }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChangeNotifierProvider(
-                          create: (context) => ExamProvider(),
-                          child: HamoOrig(),
-                        ),
+                    await context.read<ExamProvider>().login(
+                      LoginRequest(
+                        email: emailController.text.trim(),
+                        password: passwordcontroller.text.trim(),
                       ),
                     );
+
+                    final provider = context.read<ExamProvider>();
+
+                    if (provider.loginResult == true) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HamoOrig(),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            provider.loginError ?? "xatoooo",
+                          ),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   },
                   'text': 'Login',
                   'color': AppColors.primary_color,
