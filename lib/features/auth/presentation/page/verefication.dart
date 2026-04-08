@@ -37,7 +37,7 @@ class _VereficationState extends State<Verefication> {
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 53),
-            Row(children: [Pinput(length: 4,controller: otpcontroller,)]),
+            Row(children: [Pinput(length: 4, controller: otpcontroller)]),
             SizedBox(height: 47),
             Text(
               '04:59',
@@ -66,8 +66,9 @@ class _VereficationState extends State<Verefication> {
                 return MainButton(
                   button: {
                     'onPress': provider.isSendingOtp
-                        ? null : () async {
-                                  final request = OtpRequest(
+                        ? null
+                        : () async {
+                            final request = OtpRequest(
                               email: widget.email,
                               otp: otpcontroller.text.trim(),
                             );
@@ -91,8 +92,7 @@ class _VereficationState extends State<Verefication> {
                                 ),
                               );
                             }
-                     
-                    },
+                          },
                     'text': 'Veriffy',
                     'color': AppColors.primary_color,
                     'text_color': Colors.white,

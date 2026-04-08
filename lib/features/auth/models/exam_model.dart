@@ -1,7 +1,6 @@
 class RegisterRequest {
   final String name;
   final String email;
-
   final String password;
 
   const RegisterRequest({
@@ -34,6 +33,27 @@ class OtpRequest {
 
   Map<String, dynamic> toJson() {
     return {"email": email, "otp": otp};
+  }
+}
+
+class ResetRequest {
+  final String email;
+  final String new_password;
+
+  ResetRequest({required this.email, required this.new_password});
+
+  Map<String, dynamic> toJson() {
+    return {"email": email, "new_password": new_password};
+  }
+}
+
+class ForgotRequest {
+  final String email;
+
+  ForgotRequest({required this.email, });
+
+  Map<String, dynamic> toJson() {
+    return {"email": email};
   }
 }
 

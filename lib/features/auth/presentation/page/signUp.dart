@@ -211,8 +211,6 @@ class _SignupState extends State<Signup> {
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(SnackBar(content: Text("akk yaratildi")));
-                    
-
                     }
                       Navigator.push(
                         context,
