@@ -356,63 +356,63 @@ class _HamoOrigState extends State<HamoOrig> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
                 height: 300,
-                
+
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: 3,
                   itemBuilder: (context, index) {
-                  return    Container(
-                  width: 356,
-                  height: 60,margin: EdgeInsets.only(bottom: 20),
-                  child: Row(
-                    children: [
-                      Column(children: [Image.asset('images/rasm10.png')]),
-                      SizedBox(width: 14),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    return Container(
+                      width: 356,
+                      height: 60,
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: Row(
                         children: [
-                          Text('Shopping', style: TextStyle(fontSize: 17)),
-                          Text(
-                            'Buy some grocery',
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 97, 95, 95),
-                            ),
+                          Column(children: [Image.asset('images/rasm10.png')]),
+                          SizedBox(width: 14),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Shopping', style: TextStyle(fontSize: 17)),
+                              Text(
+                                'Buy some grocery',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 97, 95, 95),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '-\$120',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                '10:00 AM',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 97, 95, 95),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '-\$120',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.red,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            '10:00 AM',
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 97, 95, 95),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  
-                );
-                },),
+                    );
+                  },
+                ),
               ),
             ),
-         
+
             SizedBox(height: 25),
-            
-          
+
             SizedBox(height: 39),
           ],
         ),

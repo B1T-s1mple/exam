@@ -191,7 +191,7 @@ class _SignupState extends State<Signup> {
 
 
 
-          
+
           Consumer<ExamProvider>(
             builder: (context, provider, _) {
               return MainButton(
@@ -219,7 +219,7 @@ class _SignupState extends State<Signup> {
                         MaterialPageRoute(
                           builder: (context) => ChangeNotifierProvider(
                             create: (context) => ExamProvider(),
-                            child: Verefication(),
+                            child: Verefication(email:emailController.text,),
                           ),
                         ),
                       );
