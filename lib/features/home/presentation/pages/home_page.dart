@@ -87,32 +87,38 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           SizedBox(height: 10),
-          MainButton(
-            button: {
-              'color': AppColors.primary_color,
-              'text': 'Sign Up',
-              'text_color': Colors.white,
-              'onPress': () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Signup()),
-                );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: MainButton(
+              button: {
+                'color': AppColors.primary_color,
+                'text': 'Sign Up',
+                'text_color': Colors.white,
+                'onPress': () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Signup()),
+                  );
+                },
               },
-            },
+            ),
           ),
           SizedBox(height: 10),
-          MainButton(
-            button: {
-              'color': Colors.grey.shade200,
-              'text': 'Login',
-              'text_color': AppColors.primary_color,
-              'onPress': () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: MainButton(
+              button: {
+                'color': Colors.grey.shade200,
+                'text': 'Login',
+                'text_color': AppColors.primary_color,
+                'onPress': () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
+                },
               },
-            },
+            ),
           ),
         ],
       ),

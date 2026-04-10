@@ -33,7 +33,7 @@ class ExamProvider extends ChangeNotifier {
   notifyListeners();
 
   try {
-    await ExamRepo.login(request);
+    await ExamRepo().login(request);
     loginResult = true; 
   } catch (e) {
     loginResult = false;
@@ -79,4 +79,5 @@ class ExamProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  
 }

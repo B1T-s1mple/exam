@@ -1,7 +1,6 @@
 import 'package:exam/core/constants/app_colors.dart';
 import 'package:exam/features/auth/presentation/page/forgot_password_part2.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
-import 'package:exam/features/home/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasssword extends StatefulWidget {
@@ -12,6 +11,9 @@ class ForgotPasssword extends StatefulWidget {
 }
 
 class _ForgotPassswordState extends State<ForgotPasssword> {
+  final emailController = TextEditingController();
+  final GlobalKey<FormState> text_1 = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +30,58 @@ class _ForgotPassswordState extends State<ForgotPasssword> {
             ),
 
             SizedBox(height: 46),
-            text_field(input: {'text': 'Eamil'}),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Form(
+                key: text_1,
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Quyon tezligida Emailni kiriting pls";
+                    }
+                    return null;
+                  },
+                  controller: emailController,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.grey.shade200),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.grey.shade200),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.grey.shade200),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.grey.shade200),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             SizedBox(height: 32),
             MainButton(
               button: {
                 'onPress': () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ForgotPasswordPart2(),
-                    ),
-                  );
+                  if (text_1.currentState!.validate()) {
+
+                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordPart2(
+                          email: {'email': emailController.text},
+                        ),
+                      ),
+                    );
+                  }
                 },
                 'text': 'Continiun',
                 'color': AppColors.primary_color,

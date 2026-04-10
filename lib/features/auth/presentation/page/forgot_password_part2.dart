@@ -4,13 +4,14 @@ import 'package:exam/features/home/presentation/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPart2 extends StatefulWidget {
-  const ForgotPasswordPart2({super.key});
-
+   ForgotPasswordPart2({super.key , required this.email});
+Map<String,dynamic> email = {};
   @override
   State<ForgotPasswordPart2> createState() => _ForgotPasswordPart2State();
 }
 
 class _ForgotPasswordPart2State extends State<ForgotPasswordPart2> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class _ForgotPasswordPart2State extends State<ForgotPasswordPart2> {
           SizedBox(
             width: 300,
             child: Text(textAlign: TextAlign.center,
-              'Check your email test@test.com and follow the instructions to reset your\n password',
+              'Check your email ${widget.email['email']} and follow the instructions to reset your\n password',
             ),
           ),
           SizedBox(height: 160,),

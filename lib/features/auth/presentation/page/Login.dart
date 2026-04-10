@@ -19,6 +19,9 @@ class _LoginState extends State<Login> {
   bool vision = false;
   final emailController = TextEditingController();
   final passwordcontroller = TextEditingController();
+
+  final GlobalKey<FormState> text_1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> text_2 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,28 +32,37 @@ class _LoginState extends State<Login> {
           SizedBox(height: 56),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: emailController,
-              obscureText: vision,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: 'Email',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
+            child: Form(
+              key: text_1,
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Quyon tezligida Emailni kirit";
+                  }
+                  return null;
+                },
+                controller: emailController,
+                obscureText: vision,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
                 ),
               ),
             ),
@@ -58,41 +70,50 @@ class _LoginState extends State<Login> {
           SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: passwordcontroller,
-              obscureText: vision,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      vision = !vision;
-                    });
-                  },
-                  icon: Icon(
-                    vision
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
+            child: Form(
+              key: text_2,
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Quyon tezligida Parol kirit!!!!!!!!!!!!!!!!!!!!!!";
+                  }
+                  return null;
+                },
+                controller: passwordcontroller,
+                obscureText: vision,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        vision = !vision;
+                      });
+                    },
+                    icon: Icon(
+                      vision
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                    ),
+                    color: Colors.grey,
                   ),
-                  color: Colors.grey,
-                ),
-                hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
                 ),
               ),
             ),
@@ -103,31 +124,44 @@ class _LoginState extends State<Login> {
               return MainButton(
                 button: {
                   'onPress': () async {
-                    await context.read<ExamProvider>().login(
-                      LoginRequest(
-                        email: emailController.text.trim(),
-                        password: passwordcontroller.text.trim(),
-                      ),
-                    );
-
-                    final provider = context.read<ExamProvider>();
-
-                    if (provider.loginResult == true) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HamoOrig(),
+                    if (text_1.currentState!.validate() &&
+                        text_2.currentState!.validate()) {
+                      await context.read<ExamProvider>().login(
+                        LoginRequest(
+                          email: emailController.text.trim(),
+                          password: passwordcontroller.text.trim(),
                         ),
                       );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            provider.loginError ?? "xatoooo",
+
+                      final provider = context.read<ExamProvider>();
+
+                      if (provider.loginResult == true) {
+                        if (text_1.currentState!.validate() &&
+                            text_2.currentState!.validate()) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HamoOrig(),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(provider.loginError ?? "xatoooo"),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "xatoooo  notogriiiiiiiiiiii  tori yozzzz!!!\n bilmasen forgot password bos yoki sign up qvor",
+                            ),
+                            backgroundColor: Colors.red,
                           ),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
+                        );
+                      }
                     }
                   },
                   'text': 'Login',

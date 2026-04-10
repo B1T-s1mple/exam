@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ExamRepo {
   static const String URL = "https://montra-mhys.onrender.com";
 
-  static Future<void> login(LoginRequest request) async {
+  Future<void> login(LoginRequest request) async {
     try {
       final response = await http.post(
         Uri.parse("$URL/login"),
@@ -18,7 +18,7 @@ class ExamRepo {
         throw data['detail'];
       }
       final data = jsonDecode(response.body);
-      final token = data['tokens']['access'];
+      final token = data['token'];
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
     } catch (e) {
@@ -34,7 +34,6 @@ class ExamRepo {
           "Content-Type": "application/json",
           "Accept": "application/json",
         },
-
         body: jsonEncode(request.toJson()),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -69,7 +68,7 @@ class ExamRepo {
     }
   }
 
-   static  Future<HomeResponse> malumotla() async {
+  static Future<HomeResponse> malumotla() async {
     final response = await http.get(
       Uri.parse('https://montra-mhys.onrender.com/home'),
     );

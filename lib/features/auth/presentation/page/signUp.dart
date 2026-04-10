@@ -19,6 +19,10 @@ class _SignupState extends State<Signup> {
   final emailController = TextEditingController();
   final passwordcontroller = TextEditingController();
 
+  final GlobalKey<FormState> text_1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> text_2 = GlobalKey<FormState>();
+  final GlobalKey<FormState> text_3 = GlobalKey<FormState>();
+
   bool vision = false;
   bool on = false;
   @override
@@ -40,97 +44,129 @@ class _SignupState extends State<Signup> {
           SizedBox(height: 56),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: namecontroller,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: 'Name',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 24),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: emailController,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: 'Email',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 24),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: passwordcontroller,
-              obscureText: vision,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      vision = !vision;
-                    });
-                  },
-                  icon: Icon(
-                    vision
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
+            child: Form(
+              key: text_1,
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Quyon tezligida ismini kirit";
+                  }
+                  return null;
+                },
+
+                controller: namecontroller,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  hintText: 'Name',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
                   ),
-                  color: Colors.grey,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
                 ),
-                hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Form(
+              key: text_2,
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Quyon tezligida Emailni kirit";
+                  }
+                  return null;
+                },
+                controller: emailController,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Form(
+              key: text_3,
+              child: TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Quyon tezligida Parol kirit!!!!!!!!!!!!!!!!!!!!!!";
+                  }
+                  return null;
+                },
+                controller: passwordcontroller,
+                obscureText: vision,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        vision = !vision;
+                      });
+                    },
+                    icon: Icon(
+                      vision
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                    ),
+                    color: Colors.grey,
+                  ),
+                  hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.grey.shade200),
+                  ),
                 ),
               ),
             ),
@@ -196,31 +232,44 @@ class _SignupState extends State<Signup> {
                   'text': ' Sign up',
                   "text_color": Colors.white,
                   'onPress': () async {
-                    final request = RegisterRequest(
-                      name: namecontroller.text.trim(),
-                      password: passwordcontroller.text.trim(),
-                      email: emailController.text.trim(),
-                    );
-
-                    await context.read<ExamProvider>().register(request);
-                    if (provider.registerError != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(provider.registerError!)),
+                    if (text_1.currentState!.validate() &&
+                        text_2.currentState!.validate() &&
+                        text_3.currentState!.validate()) {
+                      final request = RegisterRequest(
+                        name: namecontroller.text.trim(),
+                        password: passwordcontroller.text.trim(),
+                        email: emailController.text.trim(),
                       );
-                    } else if (provider.registerResult == true) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text("akk yaratildi")));
-                    }
+
+                      await context.read<ExamProvider>().register(request);
+                      if (provider.registerError != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(provider.registerError!.toString()),
+                          ),
+                        );
+                      } else if (provider.registerResult == true) {
+                        
+                      } else if (text_1.currentState!.validate() &&
+                          text_2.currentState!.validate() &&
+                          text_3.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("akk yaratildi")),
+                        );
+                      } else {
+                        print('toldir');
+                      }
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Verefication(
-                            email: emailController.text.trim(),
-                          ),
+                          builder: (context) =>
+                              Verefication(email: emailController.text.trim()),
                         ),
                       );
+                    }
                   },
+
                   'color': AppColors.primary_color,
                 },
               );
