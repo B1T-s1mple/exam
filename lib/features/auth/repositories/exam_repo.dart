@@ -68,6 +68,23 @@ class ExamRepo {
     }
   }
 
+Future<void> forgotPassword({required String email}) async {
+  final response = await http.post(
+    Uri.parse("$URL/forgot-password"),
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: jsonEncode({
+      "email": email,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    throw Exception("Error");
+  }
+}
+
   static Future<HomeResponse> malumotla() async {
     final response = await http.get(
       Uri.parse('https://montra-mhys.onrender.com/home'),

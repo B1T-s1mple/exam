@@ -41,7 +41,7 @@ class _ForgotPasswordPart2State extends State<ForgotPasswordPart2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ResetPassword(),
+                      builder: (context) => ResetPassword(forgot_email:{ 'email':' ${widget.email}'},),
                     ),
                   );
                 },

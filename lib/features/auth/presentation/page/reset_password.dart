@@ -1,12 +1,12 @@
 import 'package:exam/core/constants/app_colors.dart';
 import 'package:exam/features/auth/presentation/page/Login.dart';
+import 'package:exam/features/auth/repositories/exam_repo.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
-import 'package:exam/features/home/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
-
+  ResetPassword({super.key, required this.forgot_email});
+  Map<String, dynamic> forgot_email = {};
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
 }
@@ -32,7 +32,10 @@ class _ResetPasswordState extends State<ResetPassword> {
               child: TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Quyon tezligida kod kirit kirit";
+                    return "Parolni tasdiqlang";
+                  }
+                  if (value != passwordcontroller.text) {
+                    return "bir xil qib yoz ee";
                   }
                   return null;
                 },
@@ -69,7 +72,10 @@ class _ResetPasswordState extends State<ResetPassword> {
               child: TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Quyon tezligida kodni qaytar kirit";
+                    return "Parolni tasdiqlang";
+                  }
+                  if (value != passwordcontroller.text) {
+                    return "bir xil qib yoz ee";
                   }
                   return null;
                 },
@@ -101,13 +107,35 @@ class _ResetPasswordState extends State<ResetPassword> {
           SizedBox(height: 32),
           MainButton(
             button: {
-              'onPress': () {
-                if (text_2.currentState!.validate() &&
-                    text_1.currentState!.validate()) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
+              'onPress': () async {
+                if (text_1.currentState!.validate() &&
+                    text_2.currentState!.validate()) {
+                  if (passwordcontroller.text == passwordcontroller_2.text) {
+                    try {
+                      await ExamRepo().forgotPassword(
+                        
+                        email:   widget.forgot_email['email'],
+                      );
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                        (route) => false,
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Parol ozgard !")),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("Xatolik: $e")));
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Parol bir xilqb yoz e !!")),
+                    );
+                  }
                 }
               },
               'text': 'Continiun',
