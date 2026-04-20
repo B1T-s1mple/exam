@@ -112,9 +112,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                     text_2.currentState!.validate()) {
                   if (passwordcontroller.text == passwordcontroller_2.text) {
                     try {
-                      await ExamRepo().forgotPassword(
+                      await ExamRepo().ResetPassword(
                         
                         email:   widget.forgot_email['email'],
+                        new_password: passwordcontroller.text
                       );
 
                       Navigator.pushAndRemoveUntil(

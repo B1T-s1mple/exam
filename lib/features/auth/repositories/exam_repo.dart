@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:exam/features/auth/presentation/page/reset_password.dart';
 import 'package:http/http.dart' as http;
 import 'package:exam/features/auth/models/exam_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,22 +69,38 @@ class ExamRepo {
     }
   }
 
-Future<void> forgotPassword({required String email}) async {
-  final response = await http.post(
-    Uri.parse("$URL/forgot-password"),
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-    body: jsonEncode({
-      "email": email,
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    throw Exception("Error");
+  Future<void> forgotPassword({required String email}) async {
+    final response = await http.post(
+      Uri.parse("$URL/forgot-password"),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: jsonEncode({"email": email}),
+    );
+    print(response.body);
+    if (response.statusCode != 200) {
+      throw Exception("Error");
+    }
   }
-}
+
+  Future<void> ResetPassword({
+    required String new_password,
+    required String email,
+  }) async {
+    final response = await http.post(
+      Uri.parse("$URL/reset-password"),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: jsonEncode({"new_password": new_password, "email": email}),
+    );
+
+    if (response.statusCode != 200 ) {
+      throw Exception("Error");
+    }
+  }
 
   static Future<HomeResponse> malumotla() async {
     final response = await http.get(

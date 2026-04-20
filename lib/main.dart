@@ -1,12 +1,10 @@
-import 'package:exam/features/auth/presentation/provider/exam_provider.dart';
+import 'package:exam/features/auth/presentation/page/uyga_vazifa.dart';
+import 'package:exam/features/home/presentation/cubit/homework.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'features/home/presentation/pages/first_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(create: (context) => ExamProvider(), child: MyApp()),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +17,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: FirstScreen(),
+
+      home: BlocProvider(
+        create: (context) => Homework(),
+        child: UygaVazifa(),
+      ),
     );
   }
 }

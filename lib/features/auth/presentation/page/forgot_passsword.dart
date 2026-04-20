@@ -1,5 +1,6 @@
 import 'package:exam/core/constants/app_colors.dart';
 import 'package:exam/features/auth/presentation/page/forgot_password_part2.dart';
+import 'package:exam/features/auth/repositories/exam_repo.dart';
 import 'package:exam/features/home/presentation/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 
@@ -69,18 +70,28 @@ class _ForgotPassswordState extends State<ForgotPasssword> {
             SizedBox(height: 32),
             MainButton(
               button: {
-                'onPress': () {
+                'onPress': () async {
                   if (text_1.currentState!.validate()) {
+                    try {
+                      await ExamRepo().forgotPassword(
+                        email:emailController.text,
+                      );
 
-                    
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ForgotPasswordPart2(
-                          email: {'email': emailController.text},
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPart2(
+                            email: {'email': emailController.text},
+                          ),
                         ),
-                      ),
-                    );
+                      );
+
+                     
+                    } catch (e) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text("Xatolik: $e")));
+                    }
                   }
                 },
                 'text': 'Continiun',
