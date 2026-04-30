@@ -12,8 +12,7 @@ class UygaVazifa extends StatefulWidget {
 }
 
 class _UygaVazifaState extends State<UygaVazifa> {
-  @override
-  int sl = 0;
+  int sl = 0; 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(

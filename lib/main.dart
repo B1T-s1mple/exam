@@ -1,5 +1,6 @@
-import 'package:exam/features/auth/presentation/page/uyga_vazifa.dart';
-import 'package:exam/features/home/presentation/cubit/homework.dart';
+import 'package:exam/features/home/presentation/cubit/cubit/dars_uyga_vazifa_api_cubit.dart';
+import 'package:exam/features/home/presentation/pages/home_page.dart';
+import 'package:exam/features/home/presentation/pages/uyga_vazifa_api_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,9 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
 
-      home: BlocProvider(
-        create: (context) => Homework(),
-        child: UygaVazifa(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => DarsUygaVazifaApiCubit()),
+
+        ],
+
+        child: HomePage(),
       ),
     );
   }
